@@ -10,6 +10,8 @@ public class Brick : MonoBehaviour
     
     public int PointValue;
 
+    private bool isAlive = true;
+
     void Start()
     {
         var renderer = GetComponentInChildren<Renderer>();
@@ -35,8 +37,12 @@ public class Brick : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        onDestroyed.Invoke(PointValue);
-        
+        if (isAlive)
+        {
+            isAlive = false;
+            onDestroyed.Invoke(PointValue);
+        }
+
         //slight delay to be sure the ball have time to bounce
         Destroy(gameObject, 0.2f);
     }
